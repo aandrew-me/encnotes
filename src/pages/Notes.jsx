@@ -18,6 +18,14 @@ function Notes() {
 		window.addEventListener("resize", () => {
 			setWidth(innerWidth);
 		});
+
+		const masterKey = localStorage.getItem("masterKey");
+
+		if (masterKey === "" || masterKey === null) {
+			localStorage.setItem("cookie", "");
+			window.location.href = "/login";
+		}
+
 		axios
 			.get(url + "/api/notes", {
 				headers: {
@@ -27,13 +35,16 @@ function Notes() {
 			.then((data) => {
 				const userNotes = data.data.notes;
 				let newNotes = [];
-				console.log(userNotes);
 				try {
 					userNotes.forEach((note) => {
-						const itemKey = note.itemKey;
+						const encItemKey = note.itemKey;
+						const itemKey = AES.decrypt(encItemKey, masterKey).toString(enc.Utf8)
 						note.title = AES.decrypt(note.title, itemKey).toString(
 							enc.Utf8
 						);
+
+						note.itemKey = itemKey
+
 						note.body = JSON.parse(
 							AES.decrypt(note.body, itemKey).toString(enc.Utf8)
 						);
@@ -69,8 +80,16 @@ function Notes() {
 			.map((byte) => byte.toString(16).padStart(2, "0"))
 			.join("");
 
+		const masterKey = localStorage.getItem("masterKey");
+
+		if (masterKey === "" || masterKey === null) {
+			localStorage.setItem("cookie", "");
+			window.location.href = "/login";
+		}
+		const encItemKey = AES.encrypt(itemKey, masterKey).toString();
+
 		const encryptedTitle = AES.encrypt("Untitled Note", itemKey).toString();
-		const encryptedBody = AES.encrypt("[]", itemKey).toString();
+		const encryptedBody = AES.encrypt(JSON.stringify([]), itemKey).toString();
 
 		const note = {
 			title: "Untitled Note",
@@ -82,7 +101,7 @@ function Notes() {
 			title: encryptedTitle,
 			body: encryptedBody,
 			lastModified: Date.now(),
-			itemKey,
+			itemKey: encItemKey,
 		};
 		axios
 			.post(url + "/api/notes", encNote, {

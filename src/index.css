@@ -6,8 +6,14 @@
 .ce-toolbar__content {
 	max-width: calc(100% - 100px) !important;
 }
+.cdx-block::selection{
+	background-color: rgb(56, 69, 209) !important;
+}
 .cdx-block {
 	max-width: 100% !important;
+}
+.ce-inline-toolbar{
+	background-color: var(--bg-primary) !important;
 }
 
 @layer base {

@@ -8,7 +8,6 @@ const url = localStorage.getItem("api-url");
 let timeoutId;
 function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 	const inputTitle = useRef();
-	const inputBody = useRef();
 
 	const [saveState, setSaveState] = useState("saved");
 

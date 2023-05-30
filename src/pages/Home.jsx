@@ -114,7 +114,7 @@ export default function Home() {
 						<p className="mt-6 text-lg leading-8 text-text-secondary">
 							EncNotes is a secure way to store your Notes in the
 							cloud. Your notes are encrypted, so only you can see
-							them.
+							them. (Still in development)
 						</p>
 						<div className="mt-10 flex items-center justify-center gap-x-6">
 							<a

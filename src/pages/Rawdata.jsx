@@ -24,7 +24,6 @@ export default function Rawdata() {
 
 	return (
 		<div>
-			<h1 className="text-center font-semibold">Raw Database Data</h1>
 			<div className="break-words p-2">{jsonData}</div>
 		</div>
 	);

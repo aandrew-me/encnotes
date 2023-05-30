@@ -149,9 +149,9 @@ function Sidebar({
 										setActiveNote(note.id);
 									}}
 								>
-									<strong>{note.title}</strong>
+									<strong>{note.title.substr(0,35)}</strong>
 									<p className="text-text-secondary">
-										{noteBody[0] && noteBody[0].data.text}
+										{noteBody[0] && (noteBody[0].data.text.replace(/<[^>]+>/g, '').substr(0,35) + "...")}
 									</p>
 									<small className="text-text-muted">
 										Last Modified{" "}

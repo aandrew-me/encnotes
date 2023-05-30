@@ -14,8 +14,11 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 	const onEditField = () => {
 		setSaveState("saving");
 		const titleData = inputTitle.current.value;
-		const encryptedTitle = AES.encrypt(titleData, activeNote.itemKey).toString()
-		const dateNow = Date.now()
+		const encryptedTitle = AES.encrypt(
+			titleData,
+			activeNote.itemKey
+		).toString();
+		const dateNow = Date.now();
 
 		onUpdateNote({
 			...activeNote,
@@ -29,7 +32,13 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 			axios
 				.put(
 					url + "/api/notes",
-					{ id: activeNote.id, title: encryptedTitle, lastModified: dateNow, hasTitle: true, hasBody: false },
+					{
+						id: activeNote.id,
+						title: encryptedTitle,
+						lastModified: dateNow,
+						hasTitle: true,
+						hasBody: false,
+					},
 					{
 						headers: {
 							Authorization: localStorage.getItem("cookie"),
@@ -51,16 +60,12 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 		cssWidth = "hidden";
 	} else if (width <= 750 && activeNote) {
 		cssWidth = "w-full";
-	} else if (!activeNote){
-		cssWidth = "hidden"
+	} else if (!activeNote) {
+		cssWidth = "w-9/12";
 	}
 	return (
-		<div
-			className={
-				"flex flex-col h-full p-2 app-main " + cssWidth
-			}
-		>
-			{saveState === "saved" && (
+		<div className={"flex flex-col h-full p-2 app-main " + cssWidth}>
+			{saveState === "saved" && activeNote && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -75,7 +80,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 				</svg>
 			)}
 
-			{saveState === "saving" && (
+			{saveState === "saving" && activeNote && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -90,7 +95,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 				</svg>
 			)}
 
-			{saveState === "error" && (
+			{saveState === "error" && activeNote && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -107,11 +112,16 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 
 			<div>
 				<svg
-					onClick={()=>{setActiveNote("")}}
+					onClick={() => {
+						setActiveNote("");
+					}}
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					fill="currentColor"
-					className={"w-9 h-9 inline-block text-gray-600 cursor-pointer " + (width >= 750 ? "hidden":"")}
+					className={
+						"w-9 h-9 inline-block text-gray-600 cursor-pointer " +
+						(width >= 750 ? "hidden" : "")
+					}
 				>
 					<path
 						fillRule="evenodd"
@@ -120,18 +130,27 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 					/>
 				</svg>
 
-				<input
-					type="text"
-					className={"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle " + (width >= 750 ? "indent-8" : "") }
-					placeholder="Note Title"
-					value={activeNote ? activeNote.title : ""}
-					onChange={onEditField}
-					ref={inputTitle}
-				/>
+				{activeNote && (
+					<input
+						type="text"
+						className={
+							"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle " +
+							(width >= 750 ? "indent-8" : "")
+						}
+						placeholder="Note Title"
+						value={activeNote ? activeNote.title : ""}
+						onChange={onEditField}
+						ref={inputTitle}
+					/>
+				)}
 			</div>
 
-			<div className="border-t border-gray-700"></div>
-			<Editor setSaveState={setSaveState} onUpdateNote={onUpdateNote} activeNote={activeNote}/>
+			{activeNote && <div className="border-t border-gray-700"></div>}
+			<Editor
+				setSaveState={setSaveState}
+				onUpdateNote={onUpdateNote}
+				activeNote={activeNote}
+			/>
 		</div>
 	);
 }

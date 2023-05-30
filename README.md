@@ -2,7 +2,7 @@
 
 ## Encrypted cloud synced Notes.
 
-This is the frontent of EncNotes. All Notes are Encrypted on the client side and sent to the server.
+EncNotes is a responsive web app for storing encrypted notes in the cloud. All Notes are Encrypted on the client side and sent to the server.
 
 Used Technologies
 - React

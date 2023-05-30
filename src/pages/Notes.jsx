@@ -169,6 +169,7 @@ function Notes() {
 				realActiveNote={activeNote}
 				onUpdateNote={onUpdateNote}
 				width={width}
+				setActiveNote={setActiveNote}
 			/>
 		</div>
 	);

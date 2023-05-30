@@ -20,7 +20,7 @@ function Signup() {
 		const password = form.current.elements.password.value;
 
 		if (email && password) {
-			const hash = SHA256(email).toString();
+			const hash = SHA256(form.current.elements.email.value).toString();
 			const salt = hash.substring(0, 32);
 
 			var derivedKey = PBKDF2(password, salt, {

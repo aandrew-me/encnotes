@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { SHA256, PBKDF2, lib } from "crypto-js";
+import { SHA256, PBKDF2 } from "crypto-js";
 
 function Login() {
 	const url = localStorage.getItem("api-url");
@@ -40,8 +40,8 @@ function Login() {
 		setEmail(form.current.elements.email.value);
 		const password = form.current.elements.password.value;
 
-		if (email && password) {
-			const hash = SHA256(email).toString();
+		if (form.current.elements.email.value && password) {
+			const hash = SHA256(form.current.elements.email.value).toString();
 			const salt = hash.substring(0, 32);
 
 			var derivedKey = PBKDF2(password, salt, {

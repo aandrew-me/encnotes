@@ -6,13 +6,13 @@
 .ce-toolbar__content {
 	max-width: calc(100% - 100px) !important;
 }
-.cdx-block::selection{
+.cdx-block::selection {
 	background-color: rgb(56, 69, 209) !important;
 }
 .cdx-block {
 	max-width: 100% !important;
 }
-.ce-inline-toolbar{
+.ce-inline-toolbar {
 	background-color: var(--bg-primary) !important;
 }
 
@@ -87,8 +87,7 @@
 		color: var(--text-primary);
 	}
 
-	.app-main,
-	.empty {
+	.app-main {
 		background: var(--bg-primary);
 	}
 	#notFoundHeader {
@@ -104,8 +103,28 @@
 		color: var(--text-primary);
 	}
 
-	textarea {
-		resize: none;
+	.fadeOut {
+		animation: fadeOut 0.5s ease forwards;
+	}
+	.fadeIn {
+		animation: fadeIn 0.5s ease forwards;
+	}
+
+	@keyframes fadeOut {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	.spin {

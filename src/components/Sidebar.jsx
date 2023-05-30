@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import MenuItem from "./MenuItem";
 
 function Sidebar({
@@ -14,7 +13,6 @@ function Sidebar({
 	setSearchTxt,
 	loadingTxt,
 }) {
-	const noteId = useRef();
 	const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified);
 	let cssWidth = "w-3/12";
 	if (width <= 750 && !activeNote) {
@@ -53,12 +51,6 @@ function Sidebar({
 			setNotes(backupNotes);
 		}
 	}
-
-	useEffect(() => {
-		if (activeNote == "  ") {
-			setActiveNote(noteId.current);
-		}
-	}, [activeNote]);
 
 	return (
 		<>
@@ -149,12 +141,12 @@ function Sidebar({
 									"flex flex-row justify-between align-middle p-3 cursor-pointer " +
 									(note.id == activeNote ? "bg-selected" : "")
 								}
+								id={note.id}
 							>
 								<div
 									className="flex flex-col py-1 flex-1"
 									onClick={() => {
-										setActiveNote("  ");
-										noteId.current = note.id;
+										setActiveNote(note.id);
 									}}
 								>
 									<strong>{note.title}</strong>
@@ -181,7 +173,12 @@ function Sidebar({
 										stroke="currentColor"
 										className="w-5 h-5 text-red-500"
 										onClick={() => {
-											onDeleteNote(note.id);
+											document
+												.getElementById(note.id)
+												.classList.add("fadeOut");
+											setTimeout(() => {
+												onDeleteNote(note.id);
+											}, 500);
 										}}
 									>
 										<path

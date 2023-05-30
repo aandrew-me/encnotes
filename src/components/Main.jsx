@@ -52,15 +52,6 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 	} else if (width <= 750 && activeNote) {
 		cssWidth = "w-full";
 	}
-
-	if (!activeNote) {
-		return (
-			<>
-				<div className={"empty flex flex-col h-full " + cssWidth}></div>
-			</>
-		);
-	}
-
 	return (
 		<div
 			className={
@@ -131,7 +122,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 					type="text"
 					className={"relative m-1 border border-none p-3 text-2xl outline-none inputTitle " + (width >= 750 ? "indent-8" : "") }
 					placeholder="Note Title"
-					value={activeNote.title}
+					value={activeNote ? activeNote.title : ""}
 					onChange={(e) => onEditField()}
 					ref={inputTitle}
 				/>

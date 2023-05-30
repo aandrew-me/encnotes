@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Main from "../components/Main";
 import axios from "axios";
@@ -6,7 +6,6 @@ import { AES, enc } from "crypto-js";
 
 function Notes() {
 	const url = localStorage.getItem("api-url");
-	const noteId = useRef();
 	const [notes, setNotes] = useState([]);
 	const [backupNotes, setBackupNotes] = useState([]);
 	const [activeNote, setActiveNote] = useState("");
@@ -44,7 +43,6 @@ function Notes() {
 						);
 
 						note.itemKey = itemKey
-
 						note.body = JSON.parse(
 							AES.decrypt(note.body, itemKey).toString(enc.Utf8)
 						);
@@ -65,12 +63,6 @@ function Notes() {
 				setLoadingTxt("");
 			});
 	}, []);
-
-	useEffect(() => {
-		if (activeNote == " ") {
-			setActiveNote(noteId.current);
-		}
-	}, [activeNote]);
 
 	const onAddNote = () => {
 		setSearchTxt("");
@@ -113,8 +105,7 @@ function Notes() {
 				note.id = response.data.note.id;
 				setNotes([note, ...backupNotes]);
 				setBackupNotes([note, ...backupNotes]);
-				noteId.current = note.id;
-				setActiveNote(" ");
+				setActiveNote(note.id);
 			});
 	};
 

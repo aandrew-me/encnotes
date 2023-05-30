@@ -20,41 +20,49 @@ import { AES, enc } from "crypto-js";
 
 let timeoutId;
 let editor;
-let firstTriggered = false;
 
 export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 	const url = localStorage.getItem("api-url");
 
 	useEffect(() => {
-		editor = new EditorJS({
-			placeholder: "Your Note Body",
-			holder: "editorjs",
-			data: {
-				blocks: activeNote.body,
-			},
-			tools: {
-				embed: Embed,
-				table: Table,
-				list: List,
-				warning: Warning,
-				code: Code,
-				linkTool: LinkTool,
-				image: SimpleImage,
-				raw: Raw,
-				header: {
-					class: Header,
-					inlineToolbar: true,
-				},
-				quote: Quote,
-				marker: Marker,
-				checklist: CheckList,
-				delimiter: Delimiter,
-				inlineCode: InlineCode,
-				simpleImage: SimpleImage,
-			},
-		});
-	}, []);
-
+		if (activeNote) {
+			if (editor) {
+				if (activeNote.body.length == 0) {
+					editor.clear();
+				} else {
+					editor.render({ blocks: activeNote.body });
+				}
+			} else {
+				editor = new EditorJS({
+					placeholder: "Your Note Body",
+					holder: "editorjs",
+					data: {
+						blocks: activeNote.body,
+					},
+					tools: {
+						embed: Embed,
+						table: Table,
+						list: List,
+						warning: Warning,
+						code: Code,
+						linkTool: LinkTool,
+						image: SimpleImage,
+						raw: Raw,
+						header: {
+							class: Header,
+							inlineToolbar: true,
+						},
+						quote: Quote,
+						marker: Marker,
+						checklist: CheckList,
+						delimiter: Delimiter,
+						inlineCode: InlineCode,
+						simpleImage: SimpleImage,
+					},
+				});
+			}
+		}
+	}, [activeNote]);
 
 	function handleInput() {
 		setSaveState("saving");
@@ -107,14 +115,10 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 	return (
 		<div
 			onInput={() => {
-				firstTriggered = true;
 				handleInput();
 			}}
 			// onKeyUp={() => {
-			// 	firstTriggered = false;
-			// 	if (!firstTriggered) {
-			// 		handleInput();
-			// 	}
+			// 	handleInput();
 			// }}
 			id="editorjs"
 			className="m-1 p-2 inputBody w-full leading-3 overflow-auto"

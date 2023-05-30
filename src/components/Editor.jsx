@@ -27,7 +27,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 
 	useEffect(() => {
 		if (activeNote) {
-			if (editor) {
+			if (editor && editor.clear) {
 				if (activeId.current !== activeNote.id) {
 					if (activeNote.body.length == 0) {
 						editor.clear();
@@ -65,6 +65,10 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 						simpleImage: SimpleImage,
 					},
 				});
+			}
+		}else {
+			if (editor && editor.destroy){
+				editor.destroy()
 			}
 		}
 	}, [activeNote]);

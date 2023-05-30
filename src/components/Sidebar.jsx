@@ -176,9 +176,7 @@ function Sidebar({
 											document
 												.getElementById(note.id)
 												.classList.add("fadeOut");
-											setTimeout(() => {
 												onDeleteNote(note.id);
-											}, 500);
 										}}
 									>
 										<path

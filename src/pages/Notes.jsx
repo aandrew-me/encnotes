@@ -122,10 +122,12 @@ function Notes() {
 			})
 			.then((response) => {
 				console.log(response.data);
+				setActiveNote("")
+				setNotes(newNotesArray);
+				setBackupNotes(newNotesArray);
 			})
 			.catch((error) => console.log(error));
-		setNotes(newNotesArray);
-		setBackupNotes(newNotesArray);
+
 	};
 
 	const getActiveNote = () => {

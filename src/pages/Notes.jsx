@@ -141,7 +141,6 @@ function Notes() {
 			if (note.id === activeNote) {
 				return updatedNote;
 			}
-
 			return note;
 		});
 
@@ -167,9 +166,9 @@ function Notes() {
 			/>
 			<Main
 				activeNote={getActiveNote()}
+				realActiveNote={activeNote}
 				onUpdateNote={onUpdateNote}
 				width={width}
-				setActiveNote={setActiveNote}
 			/>
 		</div>
 	);

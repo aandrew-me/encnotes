@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Notes from "./pages/Notes";
+import Rawdata from "./pages/Rawdata";
 
 // Setting API URL
 localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
 	{
 		path: "/notes",
 		element: <Notes />,
+	},
+	{
+		path: "/raw",
+		element: <Rawdata />,
 	},
 ]);
 

@@ -14,24 +14,29 @@ import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
 import SimpleImage from "@editorjs/simple-image";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import axios from "axios";
-import { AES, enc } from "crypto-js";
+import { AES } from "crypto-js";
 
 let timeoutId;
 let editor;
 
 export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 	const url = localStorage.getItem("api-url");
+	const activeId = useRef();
 
 	useEffect(() => {
 		if (activeNote) {
 			if (editor) {
-				if (activeNote.body.length == 0) {
-					editor.clear();
-				} else {
-					editor.render({ blocks: activeNote.body });
-				}
+				if (activeId.current !== activeNote.id) {
+					if (activeNote.body.length == 0) {
+						editor.clear();
+					} else {
+						editor.render({ blocks: activeNote.body });
+					}
+					activeId.current = activeNote.id
+
+				} 
 			} else {
 				editor = new EditorJS({
 					placeholder: "Your Note Body",

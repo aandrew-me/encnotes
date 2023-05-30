@@ -51,6 +51,8 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 		cssWidth = "hidden";
 	} else if (width <= 750 && activeNote) {
 		cssWidth = "w-full";
+	} else if (!activeNote){
+		cssWidth = "hidden"
 	}
 	return (
 		<div
@@ -63,7 +65,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					fill="currentColor"
-					className="w-8 h-8 fixed top-5 right-5 text-green-500"
+					className="w-8 h-8 fixed top-5 right-5 text-green-500 z-10"
 				>
 					<path
 						fillRule="evenodd"
@@ -120,10 +122,10 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 
 				<input
 					type="text"
-					className={"relative m-1 border border-none p-3 text-2xl outline-none inputTitle " + (width >= 750 ? "indent-8" : "") }
+					className={"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle " + (width >= 750 ? "indent-8" : "") }
 					placeholder="Note Title"
 					value={activeNote ? activeNote.title : ""}
-					onChange={(e) => onEditField()}
+					onChange={onEditField}
 					ref={inputTitle}
 				/>
 			</div>

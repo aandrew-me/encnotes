@@ -25,7 +25,7 @@ function Signup() {
 
 			var derivedKey = PBKDF2(password, salt, {
 				keySize: 512 / 32,
-				iterations: 1000,
+				iterations: 10000,
 			}).toString();
 
 			// const masterKey = derivedKey.substring(0, 64);

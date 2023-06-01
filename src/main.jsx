@@ -11,7 +11,8 @@ import Rawdata from "./pages/Rawdata";
 import Settings from "./pages/Settings";
 
 // Setting API URL
-localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
+// localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
+localStorage.setItem("api-url", "https://encnotes.domcloud.io");
 // localStorage.setItem("api-url", "http://127.0.0.1:3000")
 const localTheme = localStorage.getItem("theme");
 if (localTheme) {

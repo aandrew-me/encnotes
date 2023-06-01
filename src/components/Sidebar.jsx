@@ -86,7 +86,7 @@ function Sidebar({
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					fill="currentColor"
-					className="w-16 h-16 absolute bottom-2 right-2 cursor-pointer text-gray-500"
+					className="z-10 w-16 h-16 absolute bottom-2 right-2 cursor-pointer text-gray-500"
 					onClick={onAddNote}
 				>
 					<path
@@ -125,10 +125,28 @@ function Sidebar({
 
 				<div className="border-t border-bg-primary"></div>
 
-				<p className="text-center text-lg p-2">{loadingTxt}</p>
+				{/* Loading Skeleton */}
+				<div>
+					<div className={loadingTxt ? "" : "hidden"}>
+						<div className="flex flex-col p-3 cursor-pointer">
+							<div className="bg-bg-primary w-full h-8 my-2 rounded-md animate-pulse"></div>
+							<div className="bg-bg-primary w-full h-12 rounded-md animate-pulse"></div>
+						</div>
+						<div className="flex flex-col p-3 cursor-pointer">
+							<div className="bg-bg-primary w-full h-8 my-2 rounded-md animate-pulse"></div>
+							<div className="bg-bg-primary w-full h-12 rounded-md animate-pulse"></div>
+						</div>
+						<div className="flex flex-col p-3 cursor-pointer">
+							<div className="bg-bg-primary w-full h-8 my-2 rounded-md animate-pulse"></div>
+							<div className="bg-bg-primary w-full h-12 rounded-md animate-pulse"></div>
+						</div>
+						<div className="flex flex-col p-3 cursor-pointer">
+							<div className="bg-bg-primary w-full h-8 my-2 rounded-md animate-pulse"></div>
+							<div className="bg-bg-primary w-full h-12 rounded-md animate-pulse"></div>
+						</div>
+					</div>
 
 				{/* Notes in here */}
-				<div>
 					{sortedNotes.map((note) => {
 						const noteBody = note.body;
 						return (
@@ -149,9 +167,13 @@ function Sidebar({
 										setActiveNote(note.id);
 									}}
 								>
-									<strong>{note.title.substr(0,35)}</strong>
+									<strong>{note.title.substr(0, 35)}</strong>
 									<p className="text-text-secondary">
-										{noteBody[0] && noteBody[0].data.text && (noteBody[0].data.text.replace(/<[^>]+>/g, '').substr(0,35) + "...")}
+										{noteBody[0] &&
+											noteBody[0].data.text &&
+											noteBody[0].data.text
+												.replace(/<[^>]+>/g, "")
+												.substr(0, 35) + "..."}
 									</p>
 									<small className="text-text-muted">
 										Last Modified{" "}
@@ -176,7 +198,7 @@ function Sidebar({
 											document
 												.getElementById(note.id)
 												.classList.add("fadeOut");
-												onDeleteNote(note.id);
+											onDeleteNote(note.id);
 										}}
 									>
 										<path

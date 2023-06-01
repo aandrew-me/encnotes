@@ -1,7 +1,7 @@
 {
   "name": "encnotes-client",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.8.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,6 @@
     "@editorjs/editorjs": "^2.27.0",
     "@editorjs/embed": "^2.5.3",
     "@editorjs/header": "^2.7.0",
-    "@editorjs/image": "^2.8.1",
     "@editorjs/inline-code": "^1.4.0",
     "@editorjs/link": "^2.5.0",
     "@editorjs/list": "^1.8.0",

@@ -9,10 +9,10 @@ export default defineConfig({
 		VitePWA({
 			registerType: "autoUpdate",
 			devOptions: {
-				enabled: true,
+				enabled: false,
 			},
 			manifest: {
-				start_url: ".",
+				start_url: "/notes",
 				name: "EncNotes",
 				short_name: "EncNotes",
 				description: "Encrypted Cloud Notes",

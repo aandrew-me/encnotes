@@ -1,15 +1,16 @@
-import React from "react";
+import React, {lazy} from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/Home";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import Signup from "./pages/Signup";
-import Notes from "./pages/Notes";
-import Rawdata from "./pages/Rawdata";
-import Settings from "./pages/Settings";
-import Verify from "./pages/Verify";
+// import Login from "./pages/Login";
+import Login from "./pages/Login"
+import NotFound from "./pages/NotFound"
+import Signup from "./pages/Signup"
+import Notes from "./pages/Notes"
+import Rawdata from "./pages/Rawdata"
+import Settings from "./pages/Settings"
+import Verify from "./pages/Verify"
 
 // Setting API URL
 // localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");

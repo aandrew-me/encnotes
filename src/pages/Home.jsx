@@ -17,13 +17,13 @@ export default function Home() {
 					aria-label="Global"
 				>
 					<div className="flex lg:flex-1">
-						<a href="#" className="m-1.5 p-1.5">
 							<img
-								className="h-10 w-auto"
-								src="/logo.png"
+								loading="lazy"
+								height={"40px"}
+								width={"40px"}
+								src="/192x192.png"
 								alt=""
 							/>
-						</a>
 					</div>
 					<div className="flex lg:hidden">
 						<button

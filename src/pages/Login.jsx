@@ -4,15 +4,18 @@ import { SHA256, PBKDF2 } from "crypto-js";
 
 function Login() {
 	const url = localStorage.getItem("api-url");
-
+	const emailInput = useRef();
 	const [errorMsg, setErrorMsg] = useState("");
-	const [verifyEmail, setVerifyEmail] = useState(false);
-	const [verificationStatus, setVerificationStatus] = useState("");
-	const [email, setEmail] = useState("");
 	const form = useRef();
 
 	// Check if already logged in
 	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const emailParam = urlParams.get("email");
+
+		if (emailParam) {
+			emailInput.current.value = emailParam;
+		}
 		axios
 			.post(
 				url + "/api/login",
@@ -36,12 +39,11 @@ function Login() {
 
 	function handleLogin(e) {
 		e.preventDefault();
-
-		setEmail(form.current.elements.email.value);
+		const formEmail = form.current.elements.email.value
 		const password = form.current.elements.password.value;
 
-		if (form.current.elements.email.value && password) {
-			const hash = SHA256(form.current.elements.email.value).toString();
+		if (formEmail && password) {
+			const hash = SHA256(formEmail).toString();
 			const salt = hash.substring(0, 32);
 
 			var derivedKey = PBKDF2(password, salt, {
@@ -53,7 +55,7 @@ function Login() {
 			const serverPassword = derivedKey.substring(64, 128);
 
 			const data = {
-				email: form.current.elements.email.value,
+				email: formEmail,
 				password: serverPassword,
 			};
 			console.log(data);
@@ -65,7 +67,7 @@ function Login() {
 						const session_id =
 							response.headers["authorization"].split(";")[0];
 						localStorage.setItem("cookie", session_id);
-						localStorage.setItem("masterKey", masterKey)
+						localStorage.setItem("masterKey", masterKey);
 						window.location.href = "/notes";
 					}
 				})
@@ -76,8 +78,8 @@ function Login() {
 							error.response.data.message ===
 							"You need to verify your Email"
 						) {
-							setVerifyEmail(true);
-							setErrorMsg(error.response.data.message);
+							window.location.href = `/verify?email=${formEmail}`
+							
 						} else {
 							setErrorMsg(error.response.data.message);
 						}
@@ -86,26 +88,6 @@ function Login() {
 					}
 				});
 		}
-	}
-
-	function sendEmail() {
-		setErrorMsg("");
-		setVerificationStatus("");
-		console.log("Sending email to", email);
-		axios
-			.post(url + "/api/sendEmail", { email: email })
-			.then((response) => {
-				console.log(response);
-				setVerificationStatus(response.data.message);
-			})
-			.catch((error) => {
-				console.log(error);
-				if (error.response) {
-					setErrorMsg(error.response.data.message);
-				} else {
-					setErrorMsg(error.message);
-				}
-			});
 	}
 
 	return (
@@ -135,6 +117,7 @@ function Login() {
 								</label>
 								<div className="mt-2">
 									<input
+										ref={emailInput}
 										autoFocus
 										id="email"
 										name="email"
@@ -179,17 +162,6 @@ function Login() {
 
 							<p className="text-red-600 text-center font-bold">
 								{errorMsg}
-							</p>
-							{verifyEmail && (
-								<p
-									className="text-center font-extrabold cursor-pointer text-lg text-blue-600"
-									onClick={sendEmail}
-								>
-									Send Verification Email
-								</p>
-							)}
-							<p className="text-center font-bold">
-								{verificationStatus}
 							</p>
 						</form>
 

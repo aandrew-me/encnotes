@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Notes from "./pages/Notes";
 import Rawdata from "./pages/Rawdata";
 import Settings from "./pages/Settings";
+import Verify from "./pages/Verify";
 
 // Setting API URL
 // localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
 	{
 		path:"/settings",
 		element: <Settings/>
+	},
+	{
+		path:"/verify",
+		element: <Verify/>
 	}
 ]);
 

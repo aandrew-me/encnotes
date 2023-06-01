@@ -14,6 +14,7 @@ function Signup() {
 
 	function handleSignup(e) {
 		setErrorMsg("");
+		setInfo("")
 		e.preventDefault();
 
 		const email = form.current.elements.email.value;
@@ -41,11 +42,16 @@ function Signup() {
 				.then((response) => {
 					if (response.data.status == "true") {
 						console.log(response);
-						setInfo(response.data.message);
+						setInfo(response.data.message + " Redirecting you to verification page");
+						setTimeout(() => {
+							window.location.href = `/verify?email=${email}`
+						}, 2000);
+						
 					}
 				})
 				.catch((error) => {
 					console.log(error);
+					captchaRef.current.resetCaptcha();
 					if (error.response) {
 						setErrorMsg(error.response.data.message);
 					} else {

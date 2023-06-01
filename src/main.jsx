@@ -1,16 +1,16 @@
-import React, {lazy} from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/Home";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import Login from "./pages/Login";
-import Login from "./pages/Login"
-import NotFound from "./pages/NotFound"
-import Signup from "./pages/Signup"
-import Notes from "./pages/Notes"
-import Rawdata from "./pages/Rawdata"
-import Settings from "./pages/Settings"
-import Verify from "./pages/Verify"
+
+const Login = lazy(() => import("./pages/Login"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Notes = lazy(() => import("./pages/Notes"));
+const Rawdata = lazy(() => import("./pages/Rawdata"));
+const Settings = lazy(() => import("./pages/Settings"));
+const Verify = lazy(() => import("./pages/Verify"));
 
 // Setting API URL
 // localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
@@ -44,15 +44,23 @@ const router = createBrowserRouter([
 		element: <Rawdata />,
 	},
 	{
-		path:"/settings",
-		element: <Settings/>
+		path: "/settings",
+		element: <Settings />,
 	},
 	{
-		path:"/verify",
-		element: <Verify/>
-	}
+		path: "/verify",
+		element: <Verify />,
+	},
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<RouterProvider router={router} />
+	<Suspense
+		fallback={
+			<h1 className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-text-primary">
+				Loading...
+			</h1>
+		}
+	>
+		<RouterProvider router={router} />
+	</Suspense>
 );

@@ -49,7 +49,7 @@ export default function Home() {
 					<div className="hidden lg:flex lg:flex-1 lg:justify-end">
 						<a
 							href="/login"
-							className="text-sm font-semibold leading-6 text-text-primary"
+							className="text-sm font-semibold leading-6 text-white"
 						>
 							Log in <span aria-hidden="true">&rarr;</span>
 						</a>
@@ -62,7 +62,7 @@ export default function Home() {
 					onClose={setMobileMenuOpen}
 				>
 					<div className="fixed inset-0 z-50" />
-					<Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-bg-secondary px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+					<Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
 						<div className="flex items-center justify-between">
 							<button
 								type="button"
@@ -92,7 +92,7 @@ export default function Home() {
 								<div className="py-6">
 									<a
 										href="/login"
-										className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-text-primary  hover:bg-selected"
+										className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white  hover:bg-selected"
 									>
 										Log in
 									</a>
@@ -105,24 +105,42 @@ export default function Home() {
 
 			<div className="relative isolate px-6 pt-14 lg:px-8">
 				<div
-					className="absolute -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-					aria-hidden="true"
+					className="overflow-hidden -z-10 absolute blur-3xl inset-x-0 sm:top-[-20rem] top-[-10rem] transform-gpu"
+					id="gradient"
 				>
-					<div
-						className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#f35899] to-[#844fe0] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-						style={{
-							clipPath:
-								"polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-						}}
-					/>
+					<svg
+						className="relative -translate-x-1/2 -z-10 h-[21.1875rem] left-[calc(50%-11rem)] max-w-none rotate-[30deg] sm:h-[42.375rem] sm:left-[calc(50%-30rem)]"
+						viewBox="0 0 1155 678"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
+							fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
+							fillOpacity=".3"
+						></path>
+						<defs>
+							<linearGradient
+								gradientUnits="userSpaceOnUse"
+								id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533"
+								x1="1155.49"
+								x2="-78.208"
+								y1=".177"
+								y2="474.645"
+							>
+								<stop stopColor="#844fe0"></stop>
+								<stop stopColor="#f35899" offset="1"></stop>
+							</linearGradient>
+						</defs>
+					</svg>
 				</div>
+
 				<div className="mx-auto max-w-2xl py-32">
 					<div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
 					<div className="text-center">
-						<h1 className="text-4xl font-bold tracking-tight text-text-primary sm:text-6xl">
+						<h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
 							EncNotes
 						</h1>
-						<p className="mt-6 text-lg leading-8 text-text-primary">
+						<p className="mt-6 text-lg leading-8 text-white">
 							EncNotes is a secure way to store your Notes in the
 							cloud. Your notes are encrypted, so only you can see
 							them. (Still in development)

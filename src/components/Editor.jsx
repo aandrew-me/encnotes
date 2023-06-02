@@ -126,9 +126,9 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 			onInput={() => {
 				handleInput();
 			}}
-			// onKeyUp={() => {
-			// 	handleInput();
-			// }}
+			onKeyUp={() => {
+				handleInput();
+			}}
 			id="editorjs"
 			className="m-1 p-2 inputBody w-full leading-3 overflow-auto"
 		></div>

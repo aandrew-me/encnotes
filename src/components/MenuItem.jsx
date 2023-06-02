@@ -25,6 +25,7 @@ export default function MenuItem() {
 
 	function handleTheme(e) {
 		const theme = e.target.value;
+		setTheme(theme)
 		document.documentElement.setAttribute("theme", theme);
 		localStorage.setItem("theme", theme);
 	}

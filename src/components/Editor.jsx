@@ -21,20 +21,20 @@ import { AES } from "crypto-js";
 let timeoutId;
 let editor;
 
-export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
+export default function Editor({ setSaveState, onUpdateNote, activeNoteObject }) {
 	const url = localStorage.getItem("api-url");
 	const activeId = useRef();
 
 	useEffect(() => {
-		if (activeNote) {
+		if (activeNoteObject) {
 			if (editor && editor.clear) {
-				if (activeId.current !== activeNote.id) {
-					if (activeNote.body.length == 0) {
+				if (activeId.current !== activeNoteObject.id) {
+					if (activeNoteObject.body.length == 0) {
 						editor.clear();
 					} else {
-						editor.render({ blocks: activeNote.body });
+						editor.render({ blocks: activeNoteObject.body });
 					}
-					activeId.current = activeNote.id
+					activeId.current = activeNoteObject.id
 
 				} 
 			} else {
@@ -42,7 +42,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 					placeholder: "Your Note Body",
 					holder: "editorjs",
 					data: {
-						blocks: activeNote.body,
+						blocks: activeNoteObject.body,
 					},
 					tools: {
 						embed: Embed,
@@ -66,12 +66,9 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 					},
 				});
 			}
-		}else {
-			if (editor && editor.destroy){
-				editor.destroy()
-			}
 		}
-	}, [activeNote]);
+
+	}, [activeNoteObject]);
 
 	function handleInput() {
 		setSaveState("saving");
@@ -80,7 +77,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 		timeoutId = setTimeout(() => {
 			editor.save().then((data) => {
 				const dateNow = Date.now();
-				const itemKey = activeNote.itemKey;
+				const itemKey = activeNoteObject.itemKey;
 
 				const encryptedBody = AES.encrypt(
 					JSON.stringify(data.blocks),
@@ -88,7 +85,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 				).toString();
 
 				onUpdateNote({
-					...activeNote,
+					...activeNoteObject,
 					body: data.blocks,
 					lastModified: dateNow,
 				});
@@ -97,7 +94,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 					.put(
 						url + "/api/notes",
 						{
-							id: activeNote.id,
+							id: activeNoteObject.id,
 							body: encryptedBody,
 							lastModified: dateNow,
 							hasTitle: false,
@@ -130,7 +127,7 @@ export default function Editor({ setSaveState, onUpdateNote, activeNote }) {
 				handleInput();
 			}}
 			id="editorjs"
-			className="m-1 p-2 inputBody w-full leading-3 overflow-auto"
+			className={"m-1 p-3 inputBody w-full leading-3 overflow-auto " + (activeNoteObject ? "" : "hidden")}
 		></div>
 	);
 }

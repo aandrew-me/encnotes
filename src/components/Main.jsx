@@ -6,7 +6,7 @@ import { AES } from "crypto-js";
 const url = localStorage.getItem("api-url");
 
 let timeoutId;
-function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
+function Main({ activeNoteObject, onUpdateNote, width, setActiveNote }) {
 	const inputTitle = useRef();
 
 	const [saveState, setSaveState] = useState("saved");
@@ -16,12 +16,12 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 		const titleData = inputTitle.current.value;
 		const encryptedTitle = AES.encrypt(
 			titleData,
-			activeNote.itemKey
+			activeNoteObject.itemKey
 		).toString();
 		const dateNow = Date.now();
 
 		onUpdateNote({
-			...activeNote,
+			...activeNoteObject,
 			title: titleData,
 			lastModified: dateNow,
 		});
@@ -33,7 +33,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 				.put(
 					url + "/api/notes",
 					{
-						id: activeNote.id,
+						id: activeNoteObject.id,
 						title: encryptedTitle,
 						lastModified: dateNow,
 						hasTitle: true,
@@ -56,16 +56,16 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 		}, 1000);
 	};
 	let cssWidth = "w-9/12";
-	if (width <= 750 && !activeNote) {
+	if (width <= 750 && !activeNoteObject) {
 		cssWidth = "hidden";
-	} else if (width <= 750 && activeNote) {
+	} else if (width <= 750 && activeNoteObject) {
 		cssWidth = "w-full";
-	} else if (!activeNote) {
+	} else if (!activeNoteObject) {
 		cssWidth = "w-9/12";
 	}
 	return (
 		<div className={"flex flex-col h-full p-2 app-main " + cssWidth}>
-			{saveState === "saved" && activeNote && (
+			{saveState === "saved" && activeNoteObject && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -80,7 +80,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 				</svg>
 			)}
 
-			{saveState === "saving" && activeNote && (
+			{saveState === "saving" && activeNoteObject && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 				</svg>
 			)}
 
-			{saveState === "error" && activeNote && (
+			{saveState === "error" && activeNoteObject && (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -130,26 +130,26 @@ function Main({ activeNote, onUpdateNote, width, setActiveNote }) {
 					/>
 				</svg>
 
-				{activeNote && (
+				{activeNoteObject && (
 					<input
 						type="text"
 						className={
-							"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle " +
-							(width >= 750 ? "indent-8" : "")
+							"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle indent-8"
 						}
 						placeholder="Note Title"
-						value={activeNote ? activeNote.title : ""}
+						value={activeNoteObject ? activeNoteObject.title : ""}
 						onChange={onEditField}
 						ref={inputTitle}
 					/>
 				)}
 			</div>
 
-			{activeNote && <div className="border-t border-gray-700"></div>}
+			{activeNoteObject && <div className="border-t border-gray-700"></div>}
 			<Editor
 				setSaveState={setSaveState}
 				onUpdateNote={onUpdateNote}
-				activeNote={activeNote}
+				activeNoteObject={activeNoteObject}
+				setActiveNote={setActiveNote}
 			/>
 		</div>
 	);

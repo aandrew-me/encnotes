@@ -9,7 +9,7 @@
 .cdx-block::selection{
 	background-color: var(--highlight) !important;
 }
-.cdx-block {
+.cdx-block{
 	max-width: 100% !important;
 }
 .ce-inline-tool:hover, .ce-inline-toolbar__dropdown:hover, .ce-conversion-toolbar{
@@ -20,6 +20,8 @@
 }
 .ce-toolbar__plus, .ce-toolbar__settings-btn{
 	color: var(--text-primary);
+	background-color: var(--bg-secondary);
+	border: 1px solid var(--bg-primary);
 }
 .ce-toolbar__plus:hover, .ce-toolbar__settings-btn:hover{
 	color: var(--bg-primary);
@@ -124,7 +126,7 @@
 	}
 
 	.fadeOut {
-		animation: fadeOut 0.5s ease forwards;
+		animation: fadeOut 0.8s ease forwards;
 	}
 	.fadeIn {
 		animation: fadeIn 0.5s ease forwards;
@@ -161,5 +163,11 @@
 		100% {
 			rotate: 180deg;
 		}
+	}
+}
+
+@media screen and (max-width:650px) {
+	.ce-block__content{
+		max-width: 100% !important;
 	}
 }

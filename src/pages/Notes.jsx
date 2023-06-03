@@ -167,7 +167,7 @@ function Notes() {
 				loadingTxt={loadingTxt}
 			/>
 			<Main
-				activeNote={getActiveNote()}
+				activeNoteObject={getActiveNote()}
 				realActiveNote={activeNote}
 				onUpdateNote={onUpdateNote}
 				width={width}

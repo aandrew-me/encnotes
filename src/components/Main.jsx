@@ -134,7 +134,7 @@ function Main({ activeNoteObject, onUpdateNote, width, setActiveNote }) {
 					<input
 						type="text"
 						className={
-							"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle indent-8"
+							"relative w-full m-1 border border-none p-3 text-2xl outline-none inputTitle " + (width >= 650 ? "indent-8" : "")
 						}
 						placeholder="Note Title"
 						value={activeNoteObject ? activeNoteObject.title : ""}

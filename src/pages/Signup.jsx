@@ -5,9 +5,13 @@ import PBKDF2 from "crypto-js/pbkdf2";
 import SHA256 from "crypto-js/sha256";
 
 function Signup() {
-	const url = localStorage.getItem("api-url");
+	let url = localStorage.getItem("api-url");
+	const defaultUrl = url
 	const [errorMsg, setErrorMsg] = useState("");
 	const [passwordVisible, setPasswordVisible] = useState(false);
+	const [visible, setVisible] = useState(false)
+	const backend = useRef();
+	const backendCheckbox = useRef();
 	const [info, setInfo] = useState("");
 	const form = useRef();
 	const [token, setToken] = useState(null);
@@ -168,6 +172,39 @@ function Signup() {
 							/>
 						</div>
 
+						{/* Checkbox for backend url */}
+						<div className="flex justify-center items-center">
+							<span>Use Custom Backend </span>
+							<input
+								type="checkbox"
+								className="w-5 h-5 m-2"
+								ref={backendCheckbox}
+								onChange={()=>{
+									const status = backendCheckbox.current.checked
+									setVisible(status)
+
+									if (!status) {
+										backend.current.value = defaultUrl
+										url = defaultUrl
+										localStorage.setItem("api-url", defaultUrl)
+									}
+									
+								}}
+							/>
+						</div>
+
+						{/* Backend URL Input */}
+						<input
+							type="text"
+							name="backend"
+							defaultValue={url}
+							className={"block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-center " + (visible ? "" : "hidden")}
+							ref={backend}
+							onChange={()=>{
+								url = backend.current.value
+								localStorage.setItem("api-url", url)
+							}}
+						/>
 						<div>
 							<button
 								type="submit"

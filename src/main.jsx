@@ -13,10 +13,15 @@ const Settings = lazy(() => import("./pages/Settings"));
 const Verify = lazy(() => import("./pages/Verify"));
 
 // Setting API URL
-localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
+// localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
 // localStorage.setItem("api-url", "https://encnotes.onwebapp.io");
 // localStorage.setItem("api-url", "https://encnotes.domcloud.io");
 // localStorage.setItem("api-url", "http://127.0.0.1:3000")
+let api = localStorage.getItem("api-url", "https://encnotes.andrewru.repl.co");
+if (!api) {
+	console.log("Settings new backend")
+	localStorage.setItem("api-url", "https://encnotes.andrewru.repl.co");
+}
 const localTheme = localStorage.getItem("theme");
 if (localTheme) {
 	document.documentElement.setAttribute("theme", localTheme);
